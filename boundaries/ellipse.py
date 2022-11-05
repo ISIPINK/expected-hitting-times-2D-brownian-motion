@@ -1,4 +1,4 @@
-import boundary
+import .boundary
 
 class Ellipse(Boundary):
     def __init__(self, a: float, alpha: float, b: float, beta: float) -> None:
