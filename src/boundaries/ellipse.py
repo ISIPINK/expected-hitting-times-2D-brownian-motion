@@ -1,4 +1,5 @@
-import .boundary
+from .boundary import Boundary
+import numpy as np
 
 class Ellipse(Boundary):
     def __init__(self, a: float, alpha: float, b: float, beta: float) -> None:
@@ -36,4 +37,12 @@ class Ellipse(Boundary):
         """Gets the aspect for plotting the boundary"""
         # TODO:write this function  <05-11-22, > 
         pass
+
+# tests ellipse class
+if __name__ == "__main__":
+    elly = Ellipse(a=0,alpha=1,b=0,beta=1)
+    pos1 = np.array([0,0]) 
+    pos2 = np.array([2,0]) 
+    print(elly.isInside(pos1))
+    print(elly.isInside(pos2))
 

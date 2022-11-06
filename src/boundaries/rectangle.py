@@ -1,4 +1,5 @@
-import boundary
+from .boundary import Boundary
+import numpy as np
 
 class Rectangle(Boundary):
     def __init__(self, radius1: float, radius2: float) -> None:
@@ -26,3 +27,9 @@ class Rectangle(Boundary):
     def getAspect(self) -> float:
         return self.radius1/self.radius2
 
+if __name__ == "__main__":
+    recy = Rectangle(radius1= 10, radius2 = 20)
+    pos1 = np.array([0,0]) 
+    pos2 = np.array([20,0]) 
+    print(recy.isInside(pos1))
+    print(recy.isInside(pos2))
