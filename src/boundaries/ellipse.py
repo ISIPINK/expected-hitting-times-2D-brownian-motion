@@ -19,22 +19,20 @@ class Ellipse(Boundary):
         # TODO:write this function  <05-11-22, > 
         pass
 
-    def isInside(self, position: np.array) -> bool:
+    def isInside(self, pos: np.array) -> bool:
         """ test whether a point is inside or not"""
-        return ((position[0]-self.a)/self.alpha)**2+((position[0]-self.b)/self.beta)**2 < 1
+        return ((pos[0]-self.a)/self.alpha)**2+((pos[0]-self.b)/self.beta)**2 < 1
 
     def getxLimits(self) -> list:
         """Gets the xlimits for plotting the boundary"""
-        # TODO:write this function  <05-11-22, > 
-        pass
+        return [(self.a-self.alpha)*1.2, (self.a+self.alpha)*1.2]
 
     def getyLimits(self) -> list:
         """Gets the ylimits for plotting the boundary"""
-        # TODO:write this function  <05-11-22, > 
-        pass
+        return [(self.b-self.beta)*1.2, (self.b+self.beta)*1.2]
 
     def getAspect(self) -> float:
         """Gets the aspect for plotting the boundary"""
-        # TODO:write this function  <05-11-22, > 
-        pass
+        # TODO: maybe its reverse 
+        return self.beta/self.alpha
 

@@ -48,6 +48,10 @@ class TestEllipse(unittest.TestCase):
         self.assertTrue(self.elly.isInside(self.pos1))
         self.assertFalse(self.elly.isInside(self.pos2))
 
+    def test_getDistance(self):
+        smallestFactor = min(self.elly.alpha, self.elly.beta)
+        self.assertTrue(smallestFactor - 0.01 <=self.elly.getDistance(self.pos1) <= smallestFactor + 0.01)
+        
 
 if __name__ == '__main__':
     unittest.main()
