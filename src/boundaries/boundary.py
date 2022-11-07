@@ -1,18 +1,20 @@
 from abc import ABC, abstractmethod
-import numpy as np
+from collections import namedtuple
+Position = namedtuple("x", "y")
 
 class Boundary(ABC):
+
     @abstractmethod
-    def __init__(self ):
+    def __init__(self):
         pass
 
     @abstractmethod
-    def getDistance(self, position: np.array) -> float:
+    def getDistance(self, pos: Position) -> float:
         """Returns the distance of position to closest point on the boundary"""
         pass
 
     @abstractmethod
-    def isInside(self, position: np.array) -> bool:
+    def isInside(self, pos: Position) -> bool:
         """tests if a position is inside the boundary"""
         pass
 

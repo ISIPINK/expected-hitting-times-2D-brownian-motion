@@ -1,6 +1,8 @@
 import numpy as np
 from boundary import Boundary
 from utils import distance
+from collections import namedtuple
+Position = namedtuple("x", "y")
 
 class Ellipse(Boundary):
 
@@ -28,7 +30,7 @@ class Ellipse(Boundary):
     def getLeftPoint(self):
         return np.array([self.a-self.alpha, self.b])
 
-    def getClosestOuterPoint(self, pos: np.array) -> np.array:
+    def getClosestOuterPoint(self, pos: Position) -> np.array:
         """Returns the closest outer point"""
         outerPoints = [self.getUpPoint(), self.getRightPoint(), self.getDonwPoint(), self.getLeftPoint()]
         bestPoint = outerPoints[0]
@@ -37,7 +39,7 @@ class Ellipse(Boundary):
         return bestPoint
 
 
-    def getDistance(self, pos: np.array) -> float:
+    def getDistance(self, pos: Position) -> float:
         """Returns the distance of position to closest point on the boundary"""
         # TODO:write this function  <05-11-22, >
         '''
@@ -48,7 +50,7 @@ class Ellipse(Boundary):
         '''
         pass
 
-    def isInside(self, pos: np.array) -> bool:
+    def isInside(self, pos: Position) -> bool:
         """ test whether a point is inside or not"""
         return ((pos[0]-self.a)/self.alpha)**2+((pos[0]-self.b)/self.beta)**2 < 1
 
