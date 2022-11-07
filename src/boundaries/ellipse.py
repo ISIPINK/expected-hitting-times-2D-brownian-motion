@@ -1,7 +1,8 @@
-from .boundary import Boundary
 import numpy as np
+from .boundary import Boundary
 
 class Ellipse(Boundary):
+
     def __init__(self, a: float, alpha: float, b: float, beta: float) -> None:
         """
         Init a ellipse object. The parameters come from
@@ -14,6 +15,19 @@ class Ellipse(Boundary):
         self.alpha = alpha
         self.beta = beta
 
+    def getUpPoint(self):
+        return np.array([self.a, self.b + self.beta])
+
+    def getRightPoint(self):
+        return np.array([self.a+self.alpha, self.b])
+
+    def getDownPoint(self):
+        return np.array([self.a, self.b - self.beta])
+
+    def getLeftPoint(self):
+        return np.array([self.a-self.alpha, self.b])
+
+    
     def getDistance(self, position: np.array) -> float:
         """Returns the distance of position to closest point on the boundary"""
         # TODO:write this function  <05-11-22, > 
