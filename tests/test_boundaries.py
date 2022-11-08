@@ -44,11 +44,27 @@ class TestEllipse(unittest.TestCase):
         self.elly = boundaries.Ellipse(a=0, alpha=1, b=0, beta=1)
         self.pos1 = Position(0, 0)
         self.pos2 = Position(2, 0)
+        self.pos3 = Position(1, 0)
 
     def test_isInside(self):
         self.assertTrue(self.elly.isInside(self.pos1))
         self.assertFalse(self.elly.isInside(self.pos2))
+        self.assertFalse(self.elly.isInside(self.pos3))
 
+    def test_isOn(self):
+        self.assertFalse(self.elly.isOn(self.pos1))
+        self.assertFalse(self.elly.isOn(self.pos2))
+        self.assertTrue(self.elly.isOn(self.pos3))
+
+    def test_getTheta(self):
+        with self.assertRaises(ValueError):
+            self.elly.getTheta(self.pos1)
+
+        with self.assertRaises(ValueError):
+            self.elly.getTheta(self.pos2)
+
+        self.assertEqual(self.elly.getTheta(self.pos3),0)
+        
     def test_getDistance(self):
         smallestFactor = min(self.elly.alpha, self.elly.beta)
         self.assertTrue(smallestFactor - 0.01 <=self.elly.getDistance(self.pos1) <= smallestFactor + 0.01)
