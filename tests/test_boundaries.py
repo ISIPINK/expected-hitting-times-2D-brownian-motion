@@ -1,11 +1,12 @@
 import unittest
 import sys  # still have to find a way to do this without sys
-import numpy as np
+from collections import namedtuple
 
 sys.path.insert(0, '..')
 
 import src.boundaries as boundaries
 
+Position = namedtuple("Position", ["x", "y"])
 
 class TestRectangle(unittest.TestCase):
 
@@ -15,9 +16,9 @@ class TestRectangle(unittest.TestCase):
 
     def setUp(self):
         self.recy = boundaries.Rectangle(radius1=10, radius2=20)
-        self.pos1 = np.array([0, 0])
-        self.pos2 = np.array([20, 0])
-        self.pos3 = np.array([5, 5])
+        self.pos1 = Position(0, 0)
+        self.pos2 = Position(20, 0)
+        self.pos3 = Position(5, 5)
 
 
     def test_getDistance(self):
@@ -41,8 +42,8 @@ class TestEllipse(unittest.TestCase):
     def setUp(self):
         # elly the unit circle gets unittested
         self.elly = boundaries.Ellipse(a=0, alpha=1, b=0, beta=1)
-        self.pos1 = np.array([0, 0])
-        self.pos2 = np.array([2, 0])
+        self.pos1 = Position(0, 0)
+        self.pos2 = Position(2, 0)
 
     def test_isInside(self):
         self.assertTrue(self.elly.isInside(self.pos1))

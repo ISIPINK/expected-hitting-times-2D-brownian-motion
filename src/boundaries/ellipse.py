@@ -1,8 +1,9 @@
-import numpy as np
-from boundary import Boundary
-from utils import distance
 from collections import namedtuple
-Position = namedtuple("x", "y")
+
+from .boundary import Boundary
+from .utils import distance
+
+Position = namedtuple("Position", ["x", "y"])
 
 class Ellipse(Boundary):
 
@@ -19,18 +20,18 @@ class Ellipse(Boundary):
         self.beta = beta
 
     def getUpPoint(self):
-        return np.array([self.a, self.b + self.beta])
+        return Position(self.a, self.b + self.beta)
 
     def getRightPoint(self):
-        return np.array([self.a+self.alpha, self.b])
+        return Position(self.a+self.alpha, self.b)
 
     def getDownPoint(self):
-        return np.array([self.a, self.b - self.beta])
+        return Position(self.a, self.b - self.beta)
 
     def getLeftPoint(self):
-        return np.array([self.a-self.alpha, self.b])
+        return Position(self.a-self.alpha, self.b)
 
-    def getClosestOuterPoint(self, pos: Position) -> np.array:
+    def getClosestOuterPoint(self, pos: Position) -> Position:
         """Returns the closest outer point"""
         outerPoints = [self.getUpPoint(), self.getRightPoint(), self.getDonwPoint(), self.getLeftPoint()]
         bestPoint = outerPoints[0]

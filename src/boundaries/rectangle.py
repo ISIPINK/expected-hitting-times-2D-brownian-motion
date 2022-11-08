@@ -1,5 +1,9 @@
 from .boundary import Boundary
-import numpy as np
+
+from collections import namedtuple
+
+
+Position = namedtuple("Position", ["x", "y"])
 
 class Rectangle(Boundary):
     def __init__(self, radius1: float, radius2: float) -> None:
@@ -10,13 +14,13 @@ class Rectangle(Boundary):
         self.radius1 = radius1
         self.radius2 = radius2
 
-    def getDistance(self, position: np.array) -> float:
+    def getDistance(self, pos: Position) -> float:
         """Returns the distance of position to closest point on the rectangle (works inside the rectangle)"""
-        return min(abs(position[0]-self.radius1), abs(position[1]-self.radius2), abs(position[0]+self.radius1), abs(position[1]+self.radius2))
+        return min(abs(pos[0]-self.radius1), abs(pos[1]-self.radius2), abs(pos[0]+self.radius1), abs(pos[1]+self.radius2))
 
-    def isInside(self, position: np.array) -> bool:
+    def isInside(self, pos: Position) -> bool:
         """tests if a position is inside the rectangle"""
-        return not(position[0] > self.radius1 or position[0] < -self.radius1 or position[1] > self.radius2 or position[1] < -self.radius2)
+        return not(pos[0] > self.radius1 or pos[0] < -self.radius1 or pos[1] > self.radius2 or pos[1] < -self.radius2)
 
     def getxLimits(self) -> list:
         return [-self.radius1*1.2, self.radius1*1.2]

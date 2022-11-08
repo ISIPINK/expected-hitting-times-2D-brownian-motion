@@ -1,6 +1,7 @@
 from collections import namedtuple
-Position = namedtuple("Position", ["x", "y"])
 from math import sqrt
+
+Position = namedtuple("Position", ["x", "y"])
 
 def distance(p1: Position, p2: Position):
     '''

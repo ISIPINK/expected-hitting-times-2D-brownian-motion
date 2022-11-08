@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from collections import namedtuple
-Position = namedtuple("x", "y")
+
+Position = namedtuple("Position", ["x", "y"])
 
 class Boundary(ABC):
 
