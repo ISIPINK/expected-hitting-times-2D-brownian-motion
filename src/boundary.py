@@ -1,12 +1,40 @@
-from collections import namedtuple
+from abc import ABC, abstractmethod
 from math import acos
 from math import pi
 
-from .boundary import Boundary
-from .utils import distance
+from utils import Position
+from utils import distance
 
-Position = namedtuple("Position", ["x", "y"])
+class Boundary(ABC):
 
+    @abstractmethod
+    def __init__(self):
+        pass
+
+    @abstractmethod
+    def getDistance(self, pos: Position) -> float:
+        """Returns the distance of position to closest point on the boundary"""
+        pass
+
+    @abstractmethod
+    def isInside(self, pos: Position) -> bool:
+        """tests if a position is inside the boundary"""
+        pass
+
+    @abstractmethod
+    def getxLimits(self) -> list:
+        """Gets the xlimits for plotting the boundary"""
+        pass
+
+    @abstractmethod
+    def getyLimits(self) -> list:
+        """Gets the ylimits for plotting the boundary"""
+        pass
+
+    @abstractmethod
+    def getAspect(self) -> float:
+        """Gets the aspect for plotting the boundary"""
+        pass
 
 class Ellipse(Boundary):
 
@@ -15,8 +43,8 @@ class Ellipse(Boundary):
         Init a ellipse object. The parameters come from
         ((position[0]-self.a)/self.alpha)**2+((position[0]-self.b)/self.beta)**2 = 1
         """
-       if alpha == 0 or beta == 0:
-           raise Exception("alpha/beta of an ellipse must be non zero")
+        if alpha == 0 or beta == 0:
+            raise Exception("alpha/beta of an ellipse must be non zero")
 
         self.a = a
         self.b = b
@@ -38,12 +66,12 @@ class Ellipse(Boundary):
     def isOn(self, pos: Position):
         return ((pos[0]-self.a)/self.alpha)**2+((pos[1]-self.b)/self.beta)**2 == 1
 
- def getTheta(self, pos: Position):
-      '''
-        Return theta (parametric represention of ellipse )of a position
+    def getTheta(self, pos: Position):
+        '''
+        Return theta (parametric representation of ellipse )of a position
         on the boundary.
         '''
-       if not (self.isOn(pos)):
+        if not (self.isOn(pos)):
             raise ValueError("The position has to be on the ellipse")
 
         # first I scale my coordinates so that the ellipse becomes an unitcircle
@@ -78,7 +106,9 @@ class Ellipse(Boundary):
         I maybe need:
         - a parameteric rep of the ellipse
         - an optimizer
-        '''
+
+        Never mind I came back after studying optimization algorithms I just need to 
+        import a package and calculate some derivatives'''
         pass
 
     def isInside(self, pos: Position) -> bool:
@@ -100,4 +130,31 @@ class Ellipse(Boundary):
 
     def __str__(self):
         return f"Ellipse(a={self.a}, alpha= {self.alpha}, b={self.b}, beta={self.beta})"
+
+
+class Rectangle(Boundary):
+    def __init__(self, radius1: float, radius2: float) -> None:
+        """Init a rectangle object with radiusi =sidei/2 radius cm"""
+        if radius1 <= 0 or radius2 <= 0:
+            raise Exception(
+                "the radiuses of a rectangle must be strictly positive")
+        self.radius1 = radius1
+        self.radius2 = radius2
+
+    def getDistance(self, pos: Position) -> float:
+        """Returns the distance of position to closest point on the rectangle (works inside the rectangle)"""
+        return min(abs(pos[0]-self.radius1), abs(pos[1]-self.radius2), abs(pos[0]+self.radius1), abs(pos[1]+self.radius2))
+
+    def isInside(self, pos: Position) -> bool:
+        """tests if a position is inside the rectangle"""
+        return not(pos[0] > self.radius1 or pos[0] < -self.radius1 or pos[1] > self.radius2 or pos[1] < -self.radius2)
+
+    def getxLimits(self) -> list:
+        return [-self.radius1*1.2, self.radius1*1.2]
+
+    def getyLimits(self) -> list:
+        return [-self.radius2*1.2, self.radius2*1.2]
+
+    def getAspect(self) -> float:
+        return self.radius1/self.radius2
 

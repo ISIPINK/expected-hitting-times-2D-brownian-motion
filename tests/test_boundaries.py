@@ -5,8 +5,8 @@ from collections import namedtuple
 sys.path.insert(0, '..')
 
 import src.boundaries as boundaries
+from src.utils  import  Position 
 
-Position = namedtuple("Position", ["x", "y"])
 
 class TestRectangle(unittest.TestCase):
 
